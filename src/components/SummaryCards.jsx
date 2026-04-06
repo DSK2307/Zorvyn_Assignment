@@ -115,12 +115,12 @@ export default function SummaryCards() {
       </div>
 
       {/* Top row: light cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {topCards.map((c, i) => <MetricCard key={`top-${i}`} {...c} delay={i * 50} />)}
       </div>
 
       {/* Bottom row: dark/colored cards (Image 1 lower section) */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {bottomCards.map((c, i) => <MetricCard key={`btm-${i}`} {...c} delay={200 + i * 60} />)}
       </div>
     </div>

@@ -29,7 +29,7 @@ function Dashboard() {
       <div className="relative z-10 w-full flex flex-col flex-1">
         <TopNav />
       
-      <main className="flex-1 w-full max-w-screen-2xl mx-auto px-6 py-8 animate-fadeUp">
+      <main className="flex-1 w-full max-w-screen-2xl mx-auto px-4 sm:px-6 py-6 md:py-8 animate-fadeUp">
         {/* Universal Top Greeting/Filter Bar */}
         <GreetingBar onAddTransaction={openAdd} />
 

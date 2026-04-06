@@ -1,17 +1,18 @@
-import React from 'react';
-import { Bell, Moon, Sun, Shield, Eye } from 'lucide-react';
+import React, { useState } from 'react';
+import { Bell, Moon, Sun, Shield, Eye, Menu, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const navItems = ['Dashboard', 'Transactions', 'Insights'];
 
 export default function TopNav() {
   const { activeNav, setActiveNav, role, setRole, darkMode, setDarkMode } = useApp();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navMap = { Dashboard: 'dashboard', Transactions: 'transactions', Insights: 'insights' };
 
   return (
     <header className="sticky top-0 z-40 w-full bg-[#f0f2f7] dark:bg-[#080f1c] pt-4 pb-2 transition-colors">
-      <div className="max-w-screen-2xl mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-screen-2xl mx-auto px-4 md:px-6 flex items-center justify-between relative">
         
         {/* Left side: Logo + Nav */}
         <div className="flex items-center gap-8">
@@ -72,8 +73,37 @@ export default function TopNav() {
             </div>
 
           </div>
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden glass-card rounded-full p-1.5 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-white/30 dark:hover:bg-slate-700/50 transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Navigation Dropdown */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-white/90 dark:bg-slate-900/95 backdrop-blur-xl border-t border-gray-100 dark:border-slate-800 shadow-lg animate-fadeDown">
+          <nav className="flex flex-col p-4 gap-2">
+            {navItems.map(item => {
+              const isActive = activeNav === navMap[item];
+              return (
+                <button key={item}
+                  onClick={() => { setActiveNav(navMap[item] || 'dashboard'); setMobileMenuOpen(false); }}
+                  className={`text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200
+                    ${isActive
+                      ? 'bg-gray-900 text-white dark:bg-brand-600 dark:text-white shadow-sm'
+                      : 'text-gray-600 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-slate-800'
+                    }`}>
+                  {item}
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
